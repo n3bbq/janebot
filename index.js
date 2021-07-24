@@ -53,10 +53,22 @@ client.on('messageReactionRemove', async (reaction, user) => {
 });
 
 client.on('message', message => {
-    if (message.content === '') {
-      console.log(`New User Logged In: ${message.author.tag}`);
-      let role = message.member.guild.roles.cache.find(role => role.name === "Members");
-      if (role) message.guild.members.cache.get(message.author.id).roles.add(role);
+	if (message.type === 'GUILD_MEMBER_JOIN') {
+		console.log(`New User Logged In: ${message.author.tag}`);
+		console.log(message);
+		try {
+			let role = message.channel.guild.roles.cache.find(role => role.name === "Members");
+		} catch (error) {
+			console.log(message);
+			console.log('Error message: ', error);
+		}
+		try {
+			if (role) message.guild.members.cache.get(message.author.id).roles.add(role);
+		} catch (error) {
+			console.log(message);
+			console.log('Error Message: ', error);
+		}
+	}
     }
 });
 
