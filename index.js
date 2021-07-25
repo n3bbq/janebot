@@ -65,13 +65,13 @@ client.on('message', message => {
 			let role = message.channel.guild.roles.cache.find(role => role.name === "Members");
 		} catch (error) {
 			console.log(message);
-			console.log('Error message: ', error);
+			console.log('Unable to find role: ', error);
 		}
 		try {
 			if (role) message.guild.members.cache.get(message.author.id).roles.add(role);
 		} catch (error) {
 			console.log(message);
-			console.log('Error Message: ', error);
+			console.log('Error setting role: ', error);
 		}
 	}
 });
