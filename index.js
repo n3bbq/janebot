@@ -20,10 +20,15 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (reaction.emoji.name === '⚠️') {
 		if (reaction.message.channel.id === '845352022428483624') {
 			if (reaction.message.id === '847672394717069334') {
-			  let role = reaction.message.guild.roles.cache.find(role => role.name === "NSFW");
-			  if (role) {
-				reaction.message.guild.members.cache.find(member => member.id === user.id).roles.add(role);
-			  }
+				let role = reaction.message.guild.roles.cache.find(role => role.name === "NSFW");
+				if (role) {
+					reaction.message.guild.members.cache.find(member => member.id === user.id).roles.add(role);
+				}
+				// Lets make sure they are in Members too
+				let messagerole = reaction.message.guild.roles.cache.find(role => role.name === "Members");
+				if (messagerole) {
+					reaction.message.guild.members.cache.find(member => member.id === user.id).roles.add(messagerole);
+				}
 	  		}
 		}
 	}
@@ -69,7 +74,6 @@ client.on('message', message => {
 			console.log('Error Message: ', error);
 		}
 	}
-    }
 });
 
 client.once('ready', () => {
