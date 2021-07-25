@@ -56,21 +56,57 @@ client.on('messageReactionRemove', async (reaction, user) => {
 	}
   }
 });
-
-client.on('message', message => {
+client.on('guildMemberAdd', async (member) => {
+	let role = guild.roles.cache.find(r => r.name === "Members") || await guild.roles.fetch('845355948750274582');
+	console.log(role);
+	if (!role) {
+		console.log("Role doesn't exist.");
+	}
+	try {
+		member.roles.add(role);
+	}
+	catch (error) {
+		console.log("Unable to add role: ", error);
+	}
+});
+client.on('message', async (message) => {
+	if (message.partial) {
+		try {
+			await message.fetch();
+		} catch (error) {
+			console.error('Fetching mesage filed: ', error);
+		}
+	}
 	if (message.type === 'GUILD_MEMBER_JOIN') {
 		console.log(`New User Logged In: ${message.author.tag}`);
-		console.log(message);
-		try {
-			let role = message.channel.guild.roles.cache.find(role => role.name === "Members");
-		} catch (error) {
+		//console.log(message);
+		try 
+		{
+			role = message.channel.guild.roles.cache.find(r => r.name === "Members") || await message.channel.guild.roles.fetch('845355948750274582');
+		} 
+		catch (error) 
+		{
 			console.log(message);
 			console.log('Unable to find role: ', error);
 		}
-		try {
-			if (role) message.guild.members.cache.get(message.author.id).roles.add(role);
-		} catch (error) {
-			console.log(message);
+		try 
+		{
+			console.log(message.channel.guild.roles.cache.find(r => r.name === "Members"));
+			if (role) 
+			{
+				message.guild.members.cache.get(message.author.id).roles.add(role);
+			}
+			else
+			{
+				console.log('Error!  Role was not defined!??');
+				//console.log(message);
+				console.log(message.channel.guild.roles);
+			}
+		} 
+		catch (error) 
+		{
+//			console.log(message);
+//			console.log('User Roles: ', message.guild.members.cache.get(message.author.id).roles);
 			console.log('Error setting role: ', error);
 		}
 	}
