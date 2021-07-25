@@ -1,4 +1,8 @@
 {
 	"prefix": "!",
-	"token": "your-token-goes-here"
+	"token": "your-token-goes-here",
+	"memberRoleName": "Members",
+	"memberRoleId": "845355948750274582",
+	"botLogChannelId": "868942827910991902",
+	"welcomeChannelId": "845346931542982666"
 }
